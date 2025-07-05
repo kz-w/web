@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Khu Vực Trao Đổi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('thiet-ke-nen.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f5f5dc;
+      color: black;
+      overflow-x: hidden;
+    }
+
+    .top-bar {
+      background-color: #73b96c;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 20px;
+      font-size: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .top-bar .left,
+    .top-bar .right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .top-bar i {
+      margin-right: 5px;
+    }
+
+    .top-bar a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    .nav-bar {
+      background-color: #2f732f;
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      padding: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-bar a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    header {
+      background-color: #a2ff86;
+      padding: 30px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 40px;
+      color: #000;
+    }
+
+    .main-section {
+      background: url('images/7456dfb1-e2a8-42ee-b576-048866b6e87a.png') no-repeat center center;
+      background-size: cover;
+      padding: 50px 20px;
+      min-height: 100vh;
+    }
+
+    .section-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card-link {
+      text-decoration: none;
+    }
+
+    .card {
+      background-color: #b6ffb6;
+      border-radius: 20px;
+      width: 280px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      color: black;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 230px;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+      font-size: 22px;
+    }
+
+    .card p {
+      font-size: 16px;
+    }
+  </style>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Thanh thông tin -->
+  <div class="top-bar">
+    <div class="left">
+      <i class="fas fa-phone"></i> Hotline: 094 905 0588 |
+      <i class="fas fa-envelope" style="margin-left:10px;"></i> Email: sinhlyhoccuacay@gmail.com
+    </div>
+    <div class="right">
+      <a href="#">Facebook</a>
+      <a href="#">Đăng nhập</a>
+      <a href="#">Đăng ký</a>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <div class="nav-bar">
+    <a href="#">Trang chủ</a>
+    <a href="#">Khóa học</a>
+    <a href="#">Luyện tập</a>
+    <a href="#">Trò chơi</a>
+    <a href="#">Thử thách</a>
+    <a href="#">Đổi quà</a>
+    <a href="#">Trao đổi</a>
+  </div>
+
+  <!-- Tiêu đề -->
+  <header>
+    <h1>Khu Vực Trao Đổi</h1>
+  </header>
+
+  <!-- Nội dung chính -->
+  <div class="main-section">
+    <div class="section-container">
+      <a href="cong-khai.html" class="card-link">
+        <div class="card"> 
+          <img src="ketnoi.jpg" alt="Trao đổi công khai">
+          <h3>Kết Nối</h3>
+          <p>Hỏi đáp với diễn đàn chung của toàn thể học sinh, giáo viên và cộng tác viên Website.</p>
+        </div>
+      </a>
+
+      <a href="ban-be.html" class="card-link">
+        <div class="card"> 
+          <img src="om.jpg" alt="Trao đổi bạn bè">
+          <h3>Bạn Bè</h3>
+          <p>Trao đổi với bạn thân hoặc những người có chung sở thích về Sinh Lý Học Của Cây.</p>
+        </div>
+      </a>
+
+      <a href="chuyen-gia.html" class="card-link">
+        <div class="card"> 
+          <img src="day.jpg" alt="Trao đổi chuyên gia">
+          <h3>Chuyên Gia</h3>
+          <p>Hỏi đáp cùng người có chuyên môn như giáo viên, chuyên gia về các chủ đề bài học.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

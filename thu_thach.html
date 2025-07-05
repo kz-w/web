@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sinh lý học của cây</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0fdf4;
+      color: #2e3b27;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #6cc069;
+      color: white;
+      font-size: 14px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 15px;
+      background-color: #6cc069;
+    }
+
+    .top-bar .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-bar .user-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav {
+      background-color: #388E3C;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav li {
+      margin: 0 15px;
+    }
+
+    nav a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar,
+    .info-section {
+      width: 20%;
+      background-color: #a2ff86;
+      padding: 15px;
+    }
+
+    .main-content {
+      width: 60%;
+      padding: 15px;
+      background-image: url('noidung.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-color: transparent;
+      background-attachment: local;
+    }
+
+    h3 {
+      color: #2e3b27;
+    }
+
+    .main-title {
+      text-align: center;
+      font-size: 40px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #2e3b27;
+    }
+
+    .topic-list ul,
+    .plant-science ul,
+    .resources ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .topic-list li,
+    .plant-science li,
+    .resources li {
+      background-color: #c6e8c1;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .topic-list li:hover,
+    .plant-science li:hover,
+    .resources li:hover {
+      background-color: #a8db9f;
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .topic-list h3,
+    .resources h3 {
+      font-size: 26px;
+      color: #000000;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .plant-science li {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .topic-title {
+      font-weight: bold;
+    }
+
+    .topic-info {
+      font-size: 0.9em;
+      color: #385a3c;
+    }
+
+    .btn {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      background-color: #388e3c;
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-content {
+      transform: translateY(-30px);
+      transition: transform 0.3s ease;
+    }
+
+    .popup-overlay.active .popup-content {
+      transform: translateY(0);
+    }
+
+    .popup-content {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: pop 0.3s ease;
+    }
+    
+    .popup-image {
+      background-color: #cccccc;
+      width: 100%;
+      height: 300px;  
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 15px;
+    }
+
+    .popup-text {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .popup-text h2 {
+      margin-top: 0;
+      color: #2e3b27;
+      font-size: 24px;
+    }
+
+    .popup-text p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .popup-section {
+      margin-bottom: 20px;
+    }
+
+    .popup-section h3 {
+      font-size: 20px;
+      color: #388e3c;
+    }
+
+    .popup-section p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; 
+      right: 10px; 
+      background: #ff4040;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: #ff3333;
+      transform: scale(1.1);
+    }
+
+    a {
+        text-decoration: none; 
+        color: inherit;        
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="top-bar">
+      <div class="contact-info">
+        <span>📞 Hotline: 094 905 0588</span> |
+        <span>📧 Email: sinhlyhoccuacay@gmail.com</span>
+      </div>
+      <div class="user-links">
+        <a href="#">Facebook</a>
+        <a href="dang_nhap.html">Đăng nhập</a>
+        <a href="dang_ky.html">Đăng ký</a>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="trang_chu.html">Trang chủ</a></li>
+        <li><a href="khoa_hoc.html">Khóa học</a></li>
+        <li><a href="thu_thach.html">Thử thách</a></li>
+        <li><a href="#">Đổi quà</a></li>
+        <li><a href="trao_doi.html">Trao đổi</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="topic-list">
+        <h3>Chủ đề</h3>
+        <ul>
+          <li><button class="tab-btn active" data-tab="luat-le-quy-uoc-doi-qua">Luật lệ & Quy ước đổi quà</button></li>
+          <li><button class="tab-btn" data-tab="thu-thach-hang-thang">Thử thách hàng tháng</button></li>
+          <li><button class="tab-btn" data-tab="thu-thach-hang-tuan">Thử thách hàng tuần</button></li>
+          <li><a href="trao_doi.html"><span>Hỏi đáp</span></a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="main-content">
+      <!-- Phần Luật Lệ & Quy Ước Đổi Quà -->
+      <div class="plant-science" id="luat-le-quy-uoc-doi-qua">
+        <h3 class="main-title">Luật lệ & Quy ước đổi quà</h3>
+        <ul>
+          <li onclick="openPopup('Cách thức gửi bài', 'Sau khi hoàn thành, bạn cần nộp lại bài làm hoặc ảnh, video giới thiệu về quá trình thực hiện thử thách và bài làm cho giáo viên hoặc gửi qua email cho chúng mình!', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', '', '')">
+            <div class="topic-title">Cách thức gửi bài</div>
+            <div class="topic-info">Hai phương thức nộp chính</div>
+          </li>
+          <li onclick="openPopup('Thời gian công bố', 'Qua một tuần chọn lựa top 3 bài làm hay nhất, chúng mình sẽ công bố người đạt giải/điểm trên trang page hoặc mục vinh danh của chúng mình', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', '', '')">
+            <div class="topic-title">Công bố sản phẩm đạt giải</div>
+            <div class="topic-info">Thời gian & địa điểm</div>
+          </li>
+          <li onclick="openPopup('Điều kiện đổi quà', 'Để đổi quà, bạn cần đạt được một số điểm nhất định từ các thử thách hoặc trò chơi. Hoặc chinh phục được thử thách hàng tháng', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', '', '')">
+            <div class="topic-title">Điều kiện đổi quà</div>
+            <div class="topic-info">Điểm và quy định</div>
+          </li>
+          <li onclick="openPopup('Các loại quà', 'Có nhiều loại quà cho bạn lựa chọn, tùy vào số điểm bạn có hoặc nhận quà đặc biệt từ một sự kiện hay thử thách tháng', 'https://via.placeholder.com/400x200?text=Quà+tặng','','')">
+            <div class="topic-title">Các loại quà</div>
+            <div class="topic-info">Danh sách quà tặng</div>
+          </li>
+          <li onclick="openPopup('Cách thức nhận quà', 'Sau khi đạt đủ điều kiện, bạn hãy liên hệ cho chúng mình qua page Sinh Lý Học Của Cây để có thể nhận quà sớm nhất nhé. Nếu quá 1 tuần chưa liên hệ, món quà ấy sẽ được trao cho người có thứ hạng tiếp theo', 'https://via.placeholder.com/400x200?text=Nhận+quà','','')">
+            <div class="topic-title">Cách thức nhận quà</div>
+            <div class="topic-info">Quy trình nhận quà</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Thử Thách Hàng Tháng -->
+      <div class="plant-science" id="thu-thach-hang-thang">
+        <h3 class="main-title">Thử Thách Hàng Tháng</h3>
+        <ul>
+          <li onclick="openPopup('Khám Phá Quá Trình Quang Hợp', 'Bạn có biết rằng, cường độ ánh sáng và tốc độ Quang Hợp có mối liên hệ chặt chẽ thế nào không? Hãy cùng tìm hiểu qua thử thách lần này nhé', 'https://via.placeholder.com/400x200?text=Quang+hợp', 'Thực hiện thí nghiệm với các mức cường độ ánh sáng thay đổi và theo dõi sự thay đổi của tốc độ quang hợp, qua đó hãy tìm hiểu cách cây điều chỉnh quá trình quang hợp dưới các điều kiện ánh sáng khác nhau.','Bạn có thể tìm kiếm sự trợ giúp của người thân, bạn bè trong thử thách lần này nhé!')">
+            <div class="topic-title">Thử thách tháng 3</div>
+            <div class="topic-info">Cường độ ánh sáng và tốc độ Quang hợp</div>
+          </li>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tháng 4</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tháng 5</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Thử thách hàng tuần -->
+      <div class="plant-science" id="thu-thach-hang-tuan">
+        <h3 class="main-title">Thử thách hàng tuần</h3>
+        <ul>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tuần 1</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tuần 2</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tuần 3</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-section">
+      <div class="resources">
+        <h3>Thử thách đang diễn ra</h3>
+        <ul>
+          <li onclick="openPopup('Khám Phá Quá Trình Quang Hợp', 'Bạn có biết rằng, cường độ ánh sáng và tốc độ Quang Hợp có mối liên hệ chặt chẽ thế nào không? Hãy cùng tìm hiểu qua thử thách lần này nhé', 'https://via.placeholder.com/400x200?text=Quang+hợp', 'Thực hiện thí nghiệm với các mức cường độ ánh sáng thay đổi và theo dõi sự thay đổi của tốc độ quang hợp, qua đó hãy tìm hiểu cách cây điều chỉnh quá trình quang hợp dưới các điều kiện ánh sáng khác nhau.','Bạn có thể tìm kiếm sự trợ giúp của người thân, bạn bè trong thử thách lần này nhé!')">
+            <div class="topic-title">Thử thách tháng 3</div>
+            <div class="topic-info">Chất diệp lục & phản ứng sáng</div>
+          </li>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tháng 4</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+          <li onclick="openPopup('Tên thử thách', 'Lời dẫn', 'https://via.placeholder.com/400x200?text=Điều+khoản+đổi+quà', 'Thông tin thử thách', 'Gợi ý hoàn thành')">
+            <div class="topic-title">Thử thách tháng 5</div>
+            <div class="topic-info">Tên thử thách</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Popup section -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-content">
+      <div class="popup-image" id="popup-image">
+        <button class="close-btn" onclick="closePopup()">Đóng</button>
+      </div>
+      <div class="popup-text">
+        <h2 id="popup-title"></h2>
+        <p id="popup-description"></p>
+
+        <!-- Challenge and Hint sections -->
+        <div id="popup-challenge-section" class="popup-section">
+          <h3>Thử thách</h3>
+          <p id="popup-challenge"></p>
+        </div>
+        
+        <div id="popup-hint-section" class="popup-section">
+          <h3>Gợi ý</h3>
+          <p id="popup-hint"></p>
+        </div>        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const popupContent = popup.querySelector('.popup-content');
+  
+    function openPopup(title, description, imageUrl = null, challenge = '', hint = '') {
+      document.getElementById('popup-title').innerText = title;
+      document.getElementById('popup-description').innerText = description;
+  
+      const challengeSection = document.getElementById('popup-challenge-section');
+      const hintSection = document.getElementById('popup-hint-section');
+  
+      if (challenge && challenge.trim() !== '') {
+        document.getElementById('popup-challenge').innerText = challenge;
+        challengeSection.style.display = 'block';
+      } else {
+        challengeSection.style.display = 'none';
+      }
+  
+      if (hint && hint.trim() !== '') {
+        document.getElementById('popup-hint').innerText = hint;
+        hintSection.style.display = 'block';
+      } else {
+        hintSection.style.display = 'none';
+      }
+  
+      if (imageUrl) {
+        document.getElementById('popup-image').style.backgroundImage = `url('${imageUrl}')`;
+      } else {
+        document.getElementById('popup-image').style.backgroundImage = 'url("https://via.placeholder.com/400x200?text=Ảnh+đi+kèm")';
+      }
+  
+      popup.style.display = 'flex';
+      setTimeout(() => {
+        popup.classList.add('active');
+      }, 10);
+    }
+  
+    function closePopup() {
+      popup.classList.remove('active');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 300); 
+    }
+  
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closePopup();
+      }
+    });
+    
+    popup.addEventListener('click', function(event) {
+      if (!popupContent.contains(event.target)) {
+        closePopup();
+      }
+    });
+  </script>
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Ẩn tất cả các phần
+        document.getElementById('luat-le-quy-uoc-doi-qua').style.display = 'none';
+        document.getElementById('thu-thach-hang-thang').style.display = 'none';
+        document.getElementById('thu-thach-hang-tuan').style.display = 'none';
+
+        // Hiện phần được chọn
+        const tab = this.getAttribute('data-tab');
+        document.getElementById(tab).style.display = 'block';
+
+        // Đổi trạng thái active cho nút
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+            b.style.backgroundColor = '#f0f0f0';
+        });
+        this.classList.add('active');
+        this.style.backgroundColor = '#a2ff86';
+    });
+});
+
+// Khi tải trang, chỉ hiện phần đầu tiên
+document.getElementById('luat-le-quy-uoc-doi-qua').style.display = 'block';
+document.getElementById('thu-thach-hang-thang').style.display = 'none';
+document.getElementById('thu-thach-hang-tuan').style.display = 'none';
+  </script>
+</body>
+</html>
